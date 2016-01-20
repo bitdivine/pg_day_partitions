@@ -25,7 +25,7 @@ Postgres inheritance provides a transparent way of splitting a massive table int
 	copy ht_16792 from '/tmp/ht_16792.csv' csv;
 	
 	-- Querying the parent table gives you data in the small tables:
-	select * from br limit 20;
+	select * from ht limit 20;
 	
 	-- Data too old to be interesting?  Delete that day:
 	drop table ht_16791;
