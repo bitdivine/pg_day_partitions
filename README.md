@@ -1,7 +1,7 @@
-Postgres Day Partition
-======================
+Postgres SQL: Simple timeseries in postgres.
+============================================
 
-You have a massive table with records going back for years.  It has become unmanageable.  Even deleting old ata is slow and inconvenient.  What do you do?
+You have a massive table with records going back for years.  It has become unmanageable.  Even deleting old data is slow and inconvenient.  What do you do?
 
 Postgres inheritance provides a transparent way of splitting a massive table into many smaller tables, one for each day.  Queries don't have to be changed - postgres will transparently run a select query on all the small tables and glue the results together:
 
@@ -15,13 +15,18 @@ Postgres inheritance provides a transparent way of splitting a massive table int
 	, browser	text
 	, hack_type	int
 	);
-	-- Create a small table for UNIX daynums 16791 and 16792 and give it some data:
+	
+	-- Create small tables for UNIX daynums 16791 and 16792:
 	create table ht_16791 () inherits (ht);
 	create table ht_16792 () inherits (ht);
+
+	-- Insert some data fro those days:
 	copy ht_16791 from '/tmp/ht_16791.csv' csv;
 	copy ht_16792 from '/tmp/ht_16792.csv' csv;
+	
 	-- Querying the parent table gives you data in the small tables:
 	select * from br limit 20;
+	
 	-- Data too old to be interesting?  Delete that day:
 	drop table ht_16791;
 
